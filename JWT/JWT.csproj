@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AppSetting\AppSetting.csproj" />
+    <ProjectReference Include="..\AppSetting\AppSetting.csproj" />
   </ItemGroup>
 
 </Project>

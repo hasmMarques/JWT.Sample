@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppSetting\AppSetting.csproj" />
     <ProjectReference Include="..\JWT\JWT.csproj" />
   </ItemGroup>
 
