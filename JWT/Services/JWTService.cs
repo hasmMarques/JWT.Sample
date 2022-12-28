@@ -13,45 +13,50 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace JWT.Services
 {
-	public class JWTService : IJWTService
-	{
-		#region Fields
+    public class JWTService : IJWTService
+    {
+        #region Fields
 
-		private readonly IAppSetting _appSetting;
+        private readonly IAppSetting _appSetting;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public JWTService(IAppSetting appSetting)
-		{
-			_appSetting = appSetting ?? throw new ArgumentNullException(nameof(appSetting));
-		}
+        public JWTService(IAppSetting appSetting)
+        {
+            _appSetting = appSetting ?? throw new ArgumentNullException(nameof(appSetting));
+        }
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public string GetToken()
-		{
-			var secretKey =
-				new SymmetricSecurityKey(
-					Encoding.UTF8.GetBytes(_appSetting.GetStringFromKeyValue("JTW:IssuerSigningKey")));
-			var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha512Signature);
+        public string GetToken()
+        {
+            var secretKey =
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_appSetting.GetStringFromKeyValue("JTW:IssuerSigningKey")));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha512Signature);
 
-			var tokeOptions = new JwtSecurityToken(
-				issuer: _appSetting.GetStringFromKeyValue("JTW:ValidIssuer"),
-				audience: _appSetting.GetStringFromKeyValue("JTW:ValidAudience"),
-				claims: new List<Claim>(),
-				notBefore: new DateTimeOffset(DateTime.UtcNow).DateTime,
-				expires: DateTime.UtcNow.AddHours(1),
-				signingCredentials: signinCredentials
-			);
+            var tokeOptions = new JwtSecurityToken(
+                issuer: _appSetting.GetStringFromKeyValue("JTW:ValidIssuer"),
+                audience: _appSetting.GetStringFromKeyValue("JTW:ValidAudience"),
+                claims: new List<Claim>(),
+                notBefore: new DateTimeOffset(DateTime.UtcNow).DateTime,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: signinCredentials
+            );
 
-			var writeToken = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-			return $"Bearer {writeToken}";
-		}
+            var writeToken = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+            return $"Bearer {writeToken}";
+        }
 
-		#endregion
-	}
+        public void WriteLineToken()
+        {
+            Console.WriteLine(GetToken());
+        }
+
+        #endregion
+    }
 }

@@ -9,7 +9,7 @@ using WebApi.Swagger.Attributes;
 
 namespace WebApi.Swagger.Filters
 {
-	public class ApplySwaggerOperationSummaryFilters : IOperationFilter
+    public class ApplySwaggerOperationSummaryFilters : IOperationFilter
 	{
 		#region Public Methods
 

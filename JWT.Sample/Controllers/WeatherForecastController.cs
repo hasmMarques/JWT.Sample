@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,12 +36,16 @@ namespace WebApi.Controllers
 			_logger = logger;
 		}
 
-		#endregion
+        #endregion
 
-		#region Public Methods
-
-		[HttpGet]
-		public IEnumerable<WeatherForecast> Get()
+        #region Public Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>HttpStatusCode.OK (200) if all is OK. HttpStatusCode.Unauthorized (401) if JWT is invalid.</returns>
+        [HttpGet(Name = "WeatherForecast")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IEnumerable<WeatherForecast> Get()
 		{
 			var rng = new Random();
 			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
